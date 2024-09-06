@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from api.TTS import router
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 app = FastAPI()
 
-origins = ["http://localhost:5173", "http://localhost:3000"]
+origins = ["http://localhost:5173", os.getenv("WEB_URL")]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

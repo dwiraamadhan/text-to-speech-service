@@ -1,11 +1,11 @@
 from confluent_kafka import Consumer, KafkaError, KafkaException
-import sys
+import sys, os
 
 def consume_messages():
     # kafka configuration
     conf = {
-        "bootstrap.servers": "localhost:9092",
-        "group.id": "text-to-speech",
+        "bootstrap.servers": os.getenv("BROKER_SERVER"),
+        "group.id": os.getenv("GROUP_ID"),
         "auto.offset.reset" : "earliest"
     }
 
@@ -13,7 +13,7 @@ def consume_messages():
     consumer = Consumer(conf)
 
     # subscribe to topic
-    consumer.subscribe(["topicKedua"])
+    consumer.subscribe([os.getenv("CONSUMER_KAFKA_TOPIC")])
 
     try:
         while True:
